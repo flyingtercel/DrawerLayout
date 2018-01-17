@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/add_menu"
+        android:icon="@mipmap/ic_launcher"
+        android:menuCategory="container"
+        android:orderInCategory="10"
+        android:title="添加"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/delete_menu"
+        android:icon="@mipmap/ic_launcher"
+        android:menuCategory="container"
+        android:orderInCategory="10"
+        android:title="删除"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/query_menu"
+        android:icon="@mipmap/ic_launcher"
+        android:menuCategory="container"
+        android:orderInCategory="10"
+        android:title="查询"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/update_menu"
+        android:icon="@mipmap/ic_launcher"
+        android:menuCategory="container"
+        android:orderInCategory="10"
+        android:title="修改"
+        app:showAsAction="always" />
+    <group android:id="@+id/group">
+        <item
+            android:id="@+id/heihei_menu"
+            android:icon="@mipmap/ic_launcher"
+            android:menuCategory="container"
+            android:orderInCategory="10"
+            android:title="嘿嘿"
+            app:showAsAction="always" />
+        <item
+            android:id="@+id/hehe_menu"
+            android:icon="@mipmap/ic_launcher"
+            android:menuCategory="container"
+            android:orderInCategory="10"
+            android:title="呵呵"
+            app:showAsAction="always" />
+    </group>
+</menu>
