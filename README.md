@@ -133,3 +133,66 @@
           }
              
 ```
+###### 设置navigationView的menu菜单中的分割线
+###### menu中写法如下
+```
+<group android:id="@+id/one">
+        <item android:title="Group1-Item数据">
+            <menu>
+                <item android:title="Group1-Menu-Item数据1" />
+                <item android:title="Group1-Menu-Item数据3" />
+            </menu>
+        </item>
+    </group>
+    <group android:id="@+id/two">
+        <item android:title="Group1-Item数据">
+            <menu>
+                <item android:title="Group2-Menu-Item数据1" />
+                <item android:title="Group2-Menu-Item数据3" />
+            </menu>
+        </item>
+    </group>
+    <group android:id="@+id/three">
+        <item android:title="Group3-Item数据">
+            <item android:title="Group3-Item数据3" />
+        </item>
+    </group>
+```
+###### 设置分割线
+```
+public static void setNavigationMenuLineStyle(NavigationView navigationView, @ColorInt final int color, final int height){
+        try {
+            Field fieldByPressenter = navigationView.getClass().getDeclaredField("mPresenter");
+            fieldByPressenter.setAccessible(true);
+            NavigationMenuPresenter menuPresenter = (NavigationMenuPresenter) fieldByPressenter.get(navigationView);
+            Field fieldByMenuView = menuPresenter.getClass().getDeclaredField("mMenuView");
+            fieldByMenuView.setAccessible(true);
+            final NavigationMenuView mMenuView = (NavigationMenuView) fieldByMenuView.get(menuPresenter);
+            mMenuView.addOnChildAttachStateChangeListener(new RecyclerView.OnChildAttachStateChangeListener() {
+                @Override
+                public void onChildViewAttachedToWindow(View view) {
+                    RecyclerView.ViewHolder viewHolder = mMenuView.getChildViewHolder(view);
+                    if (viewHolder != null && "SeparatorViewHolder".equals(viewHolder.getClass().getSimpleName()) && viewHolder.itemView != null) {
+                        if (viewHolder.itemView instanceof FrameLayout) {
+                            FrameLayout frameLayout = (FrameLayout) viewHolder.itemView;
+                            View line = frameLayout.getChildAt(0);
+                            line.setBackgroundColor(color);
+                            line.getLayoutParams().height = height;
+                            line.setLayoutParams(line.getLayoutParams());
+                        }
+                    }
+                }
+
+                @Override
+                public void onChildViewDetachedFromWindow(View view) {
+
+                }
+            });
+
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+```
