@@ -1,5 +1,6 @@
 package us.mifeng.navigationview;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -9,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -21,12 +23,17 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout mian_layout;
     private Toolbar toolbar;
     private NavigationView navigationView;
-
+    //触摸时候的点的坐标
+    private int posX = 0;
+    private int posY = 0;
+    //移动之后点的坐标
+    private int curPosX = 0;
+    private int curPosY = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        startActivity(new Intent(this,DrawerActivity.class));
         findview();
         //设置显示home键,并且能够点击
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -101,9 +108,35 @@ public class MainActivity extends AppCompatActivity {
 
                         break;
                 }
-
-
-
+                return true;
+            }
+        });
+        //主视图的事件处理过程
+        mian_layout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                //判断手势有没有在这个视图中的水平方向滑动
+                switch (event.getAction()){
+                    case MotionEvent.ACTION_DOWN:
+                        //获取点击的坐标
+                        posX = (int) event.getX();
+                        posY = (int) event.getY();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        //如果大于10，标识滑动了
+                        curPosX = (int) event.getX();
+                        curPosY = (int) event.getY();
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        //判断在X轴方向滑动的距离是不是大于125，并且判断x轴方向滑动的距离是不是大于y轴滑动的距离
+                        if ((curPosX-posX>125) && (curPosX-posX)-(curPosY-posY)>0){
+                            //如果满足，则打开抽屉
+                            if (!drawerLayout.isDrawerOpen(navigationView)){
+                                drawerLayout.openDrawer(navigationView);
+                            }
+                        }
+                        break;
+                }
 
                 return true;
             }
@@ -120,7 +153,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
         }
-
         return super.onOptionsItemSelected(item);
     }
     private void showTaost(String str){
