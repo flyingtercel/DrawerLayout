@@ -1,7 +1,8 @@
 # DrawerLayout
 使用Navigation实现抽屉效果，并设置与Toolbar关联，模拟实现QQ抽屉效果</br>
 #### 实现效果如下：
-![实现qq抽屉效果](https://github.com/flyingtercel/DrawerLayout/blob/master/app/src/main/res/mipmap-hdpi/ss.png) 
+![实现qq抽屉效果1](https://github.com/flyingtercel/DrawerLayout/blob/master/app/src/main/res/mipmap-hdpi/ss.png) </br>
+![实现qq抽屉效果2](https://github.com/flyingtercel/DrawerLayout/blob/master/app/src/main/res/mipmap-hdpi/menu.png) 
 
 #### DrawerLayout的使用</br>
 ```
